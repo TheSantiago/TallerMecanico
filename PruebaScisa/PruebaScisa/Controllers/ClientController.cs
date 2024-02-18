@@ -49,33 +49,32 @@ namespace PruebaScisa.Controllers
             }
         }
 
-        public ActionResult GetUserById(int id)
+        public ActionResult GetClientById(int id)
         {
-            var user = db.Users.Find(id);
-            if (user == null)
+            var client = db.Clients.Find(id);
+            if (client == null)
             {
                 return HttpNotFound(); // Or return an appropriate error response
             }
 
-            var userData = new
+            var clientData = new
             {
-                id = user.Id,
-                userName = user.UserName,
-                password = user.Password,
-                type = user.Type
+                id = client.Id,
+                clientName = client.Name,
+                clientLastName = client.LastName,
             };
 
-            return Json(userData, JsonRequestBehavior.AllowGet);
+            return Json(clientData, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult UpdateUser(Users user)
+        public ActionResult UpdateClient(Clients clients)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    db.Entry(clients).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return Json(new { success = true });
                 }
@@ -88,18 +87,18 @@ namespace PruebaScisa.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteUser(int id)
+        public ActionResult DeleteClient(int id)
         {
             try
             {
-                var user = db.Users.Find(id);
+                var user = db.Clients.Find(id);
                 if (user != null)
                 {
-                    db.Users.Remove(user);
+                    db.Clients.Remove(user);
                     db.SaveChanges();
                     return Json(new { success = true });
                 }
-                return Json(new { success = false, message = "User not found" });
+                return Json(new { success = false, message = "Client not found" });
             }
             catch (Exception ex)
             {

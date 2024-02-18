@@ -27,6 +27,7 @@
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
         </table>
@@ -92,46 +93,24 @@
 
     <script>
         $(document).ready(function () {
-            //var table = $('#clientTable').DataTable({
-            //    ajax: {
-            //        url: '/Client/GetClients',
-            //        dataSrc: 'data' // This specifies the property name where the data array is located in the JSON response
-            //    },
-            //    columns: [
-            //        { data: 'id' },
-            //        { data: 'name' },
-            //        { data: 'lastName' },
-            //        {
-            //            data: null,
-            //            render: function (data, type, row) {
-            //                return '<button class="btn btn-primary btnEdit" data-id="' + data.id + '">Edit</button> ' +
-            //                    '<button class="btn btn-danger btnDelete" data-id="' + data.id + '">Delete</button>';
-            //            }
-            //        }
-            //    ]
-            //});
-            $(document).ready(function () {
-                var tableB = $('#clientTable').DataTable({
-                    ajax: {
-                        url: '/Client/GetClients',
-                        dataSrc: 'data' // This specifies the property name where the data array is located in the JSON response
-                    },
-                    columns: [
-                        { data: 'id' },
-                        { data: 'name' },
-                        { data: 'lastName' },
-
-                        {
-                            data: null,
-                            render: function (data, type, row) {
-                                return '<button class="btn btn-primary btnEdit" data-id="' + data.id + '">Edit</button> ' +
-                                    '<button class="btn btn-danger btnDelete" data-id="' + data.id + '">Delete</button>';
-                            }
+            var table = $('#clientTable').DataTable({
+                ajax: {
+                    url: '/Client/GetClients',
+                    dataSrc: 'data' // This specifies the property name where the data array is located in the JSON response
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'name' },
+                    { data: 'lastName' },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return '<button class="btn btn-primary btnEdit" data-id="' + data.id + '">Edit</button> ' +
+                                '<button class="btn btn-danger btnDelete" data-id="' + data.id + '">Delete</button>';
                         }
-                    ]
-                });
+                    }
+                ]
             });
-
 
 
             // Open Add User Modal
@@ -146,11 +125,11 @@
 
             // Edit User
             $('#clientTable').on('click', '.btnEdit', function () {
-                var clientId = $(this).data('id');
-                $.get('/Client/GetUserById/' + userId, function (data) {
+                var userId = $(this).data('id');
+                $.get('/Client/GetClientById/' + userId, function (data) {
                     $('#updateClientId').val(data.id);
-                    $('#updateClientName').val(data.userName);
-                    $('#updateClientLastName').val(data.userName);
+                    $('#updateName').val(data.clientName);
+                    $('#updateLastName').val(data.clientLastName);
 
                     $('#updateClientModal').modal('show');
                 });

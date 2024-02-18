@@ -1,9 +1,4 @@
-﻿@if (Session.Count==0)
-{
-    <script>
-        window.location.href = '@Url.Action("Index", "Login")';
-    </script>
-}
+﻿
 
 <!DOCTYPE html>
 <html>
@@ -29,7 +24,13 @@
                     <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Clientes", "Index", "Client", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Citas", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    @if (Session["Type"].ToString() == "admin")
+                    @if (Session.Count == 0)
+                    {
+                        <script>
+        window.location.href = '@Url.Action("Index", "Login")';
+                        </script>
+                    }
+                    else if (Session["Type"].ToString() == "admin")
                     {
 
                         <li>@Html.ActionLink("Usuarios", "Index", "User", new { area = "" }, new { @class = "nav-link" })</li>
